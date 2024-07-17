@@ -1,7 +1,7 @@
 from buyandship import BuyAndShip
 import pytest
 
-tw_url = "https://www.buyandship.com.tw/"
+TW_URL = "https://www.buyandship.com.tw/"
 
 
 @pytest.mark.parametrize(

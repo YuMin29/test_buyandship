@@ -16,16 +16,16 @@ class BuyAndShip:
         self.driver = driver
 
     def click_region_element(self):
-        regionElement = WebDriverWait(self.driver, 10).until(
+        region_element = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(
                 (By.CLASS_NAME, "bs-header-top-bar__content__country")
             )
         )
 
-        if regionElement is None:
-            print("not find region")
+        if region_element is None:
+            print("not find region element")
         else:
-            regionElement.click()
+            region_element.click()
 
     def switch_region(self, target_region):
         print("Start to switch region => ", target_region)
