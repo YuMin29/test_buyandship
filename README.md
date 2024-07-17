@@ -43,7 +43,7 @@ report.html
 
 # Report
 ![image](https://github.com/user-attachments/assets/5e117377-0e4a-4103-96f4-b6444378f171)
-# Excute result
+# Execute result
 ![image](https://github.com/user-attachments/assets/c93b1249-2bed-4728-8f66-f58925c72c61)
 
 
