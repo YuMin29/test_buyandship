@@ -23,12 +23,32 @@ TW_URL = "https://www.buyandship.com.tw/"
     ],
 )
 def test_switch_region_from_tw(test_region, target_region):
-    buyAndShip = BuyAndShip(tw_url)
+    buyAndShip = BuyAndShip(TW_URL)
     try:
         buyAndShip.click_region_element()
         new_region = buyAndShip.switch_region(test_region)
-        assert new_region.text in target_region
+        assert new_region.text == target_region
         buyAndShip.quit_chrome()
     except Exception as e:
+        buyAndShip.take_screenshot(
+            f"failed screenshot - expected value is {target_region}.png"
+        )
+        buyAndShip.quit_chrome()
+        pytest.fail(f"Test failed due to exception: {repr(e)}")
+
+
+@pytest.mark.parametrize(
+    "test_region, target_region",
+    [("香港 - 正體中文", "香港 - 正體中文"), ("日本 - 日本語", "香港 - ")],
+)
+def test_switch_region_fail_from_tw(test_region, target_region):
+    buyAndShip = BuyAndShip(TW_URL)
+    try:
+        buyAndShip.click_region_element()
+        new_region = buyAndShip.switch_region(test_region)
+        assert new_region.text == target_region
+        buyAndShip.quit_chrome()
+    except Exception as e:
+        buyAndShip.take_screenshot(f"failed.png")
         buyAndShip.quit_chrome()
         pytest.fail(f"Test failed due to exception: {repr(e)}")

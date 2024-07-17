@@ -39,24 +39,42 @@ class BuyAndShip:
         if region_list is None:
             print("not find region_list")
         else:
-            print("region list leh => ", len(region_list))
+            print("region list len => ", len(region_list))
 
         for region_item in region_list:
             region_name = region_item.find_element(
                 By.CLASS_NAME, "bs-language-list__item__name"
             )
-            print("item name => ", region_name.text.strip())
 
             if region_item.is_displayed() and region_item.is_enabled():
-                if region_item.text in target_region:
+                if region_item.text == target_region:
                     region_item.click()
-                    new_region = WebDriverWait(self.driver, 5).until(
+                    current_region = WebDriverWait(self.driver, 5).until(
                         EC.presence_of_element_located(
                             (By.CLASS_NAME, "bs-header-top-bar__content__country__text")
                         )
                     )
-                    print("new region => ", new_region.text)
-                    return new_region
+                    print("current region => ", current_region.text)
+                    return current_region
 
     def quit_chrome(self):
         self.driver.quit()
+
+    def take_screenshot(self, filepath):
+        region_element = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, "bs-header-top-bar__content__country")
+            )
+        )
+
+        def apply_style(s):
+            self.driver.execute_script(
+                "arguments[0].setAttribute('style', arguments[1]);",
+                region_element, 
+                s)
+        original_style = region_element.get_attribute('style')
+        apply_style("border: 2px solid red;")
+
+        self.driver.save_screenshot(filepath)
+
+        apply_style(original_style)   
